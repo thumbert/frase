@@ -34,7 +34,7 @@ packages:
     source: hosted
     version: "1.1.2"
   collection:
-    dependency: transitive
+    dependency: "direct main"
     description:
       name: collection
       sha256: "2f5709ae4d3d59dd8f7cd309b4e023046b57d8a6c82130785d2b0e5868084e76"
@@ -139,14 +139,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.8.3"
-  signals:
-    dependency: "direct main"
-    description:
-      name: signals
-      sha256: "85225d03e71720b6fff62a8296ba7328a3e363d1ffbb9f3a85efaa05d9e85e67"
-      url: "https://pub.dev"
-    source: hosted
-    version: "6.0.2"
   signals_core:
     dependency: transitive
     description:
@@ -156,7 +148,7 @@ packages:
     source: hosted
     version: "6.0.2"
   signals_flutter:
-    dependency: transitive
+    dependency: "direct main"
     description:
       name: signals_flutter
       sha256: "66b36ed0b5961cc7d8d0606813bc3fd66758dc1728cbfcffef0d2a97c7a706a2"
