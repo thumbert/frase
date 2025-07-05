@@ -293,7 +293,6 @@ class _GameScreenState extends State<GameScreen>
   void _submitGuess(BuildContext context) {
     var solutionCells2 = solutionCells.value;
     var cellsToFlip2 = <int>[];
-    // var cellsToClear2 = <int>[];
     for (var cell in solutionCells.value) {
       if (cell.status == SolutionStatus.unSubmitted) {
         cellsToFlip2.add(cell.index);
@@ -399,97 +398,6 @@ class _GameScreenState extends State<GameScreen>
       child: Stack(
         alignment: AlignmentDirectional.center,
         children: [
-          cell.status == SolutionStatus.unSubmitted
-              ? Transform(
-                transform: Matrix4.rotationY(_animation.value * 3.14),
-                alignment: Alignment.center,
-                child: Container(
-                  width: 55,
-                  height: 55,
-                  decoration: BoxDecoration(
-                    border: Border.all(color: cell.status.borderColor),
-                    borderRadius: BorderRadius.circular(8),
-                    color:
-                        (idx == game.activeCellIdx.value) && _blink
-                            ? Colors.grey[300]
-                            : cell.status.backgroundColor,
-                  ),
-                  child: Center(
-                    child: Text(
-                      '',
-                      textAlign: TextAlign.center,
-                      style: TextStyle(
-                        fontSize: 24,
-                        fontWeight: FontWeight.bold,
-                        color: cell.status.foregroundColor,
-                      ),
-                    ),
-                  ),
-                ),
-              )
-              : Container(
-                width: 55,
-                height: 55,
-                decoration: BoxDecoration(
-                  border: Border.all(color: cell.status.borderColor),
-                  borderRadius: BorderRadius.circular(8),
-                  color:
-                      (idx == game.activeCellIdx.value) && _blink
-                          ? Colors.grey[300]
-                          : cell.status.backgroundColor,
-                ),
-                child: Center(
-                  child: Text(
-                    '',
-                    textAlign: TextAlign.center,
-                    style: TextStyle(
-                      fontSize: 24,
-                      fontWeight: FontWeight.bold,
-                      color: cell.status.foregroundColor,
-                    ),
-                  ),
-                ),
-              ),
-          Center(
-            child: Text(
-              cell.char.toUpperCase(),
-              textAlign: TextAlign.center,
-              style: TextStyle(
-                fontSize: 24,
-                fontWeight: FontWeight.bold,
-                color: cell.status.foregroundColor,
-              ),
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-
-  Widget makeCellWidget2(int idx) {
-    var cell = solutionCells.value[idx];
-    return InkWell(
-      onTap: () {
-        // reset the active cell to this cell
-        game.activeCellIdx.value = idx;
-        var solutionCells2 = solutionCells.value;
-        solutionCells2[idx] = SolutionCell.empty();
-        solutionCells.value = solutionCells2;
-
-        //
-        if (cell.char != '') {
-          var inputCells2 = inputCells.value;
-          inputCells2[cell.inputCellIndex!] = InputCell(
-            char: cell.char,
-            index: cell.inputCellIndex!,
-            isAvailable: true,
-          );
-          inputCells.value = inputCells2;
-        }
-      },
-      child: Stack(
-        alignment: AlignmentDirectional.center,
-        children: [
           cellsToFlip.value.contains(idx)
               ? Transform(
                 transform: Matrix4.rotationY(_animation.value * 3.14),
@@ -557,53 +465,6 @@ class _GameScreenState extends State<GameScreen>
     );
   }
 
-  Widget makeCellWidgetSimple(int idx) {
-    var cell = solutionCells.value[idx];
-    return InkWell(
-      onTap: () {
-        // reset the active cell to this cell
-        game.activeCellIdx.value = idx;
-        var solutionCells2 = solutionCells.value;
-        solutionCells2[idx] = SolutionCell.empty();
-        solutionCells.value = solutionCells2;
-
-        //
-        if (cell.char != '') {
-          var inputCells2 = inputCells.value;
-          inputCells2[cell.inputCellIndex!] = InputCell(
-            char: cell.char,
-            index: cell.inputCellIndex!,
-            isAvailable: true,
-          );
-          inputCells.value = inputCells2;
-        }
-      },
-      child: Container(
-        width: 55,
-        height: 55,
-        decoration: BoxDecoration(
-          border: Border.all(color: cell.status.borderColor),
-          borderRadius: BorderRadius.circular(8),
-          color:
-              (idx == game.activeCellIdx.value) && _blink
-                  ? Colors.grey[300]
-                  : cell.status.backgroundColor,
-        ),
-        child: Center(
-          child: Text(
-            cell.char.toUpperCase(),
-            textAlign: TextAlign.center,
-            style: TextStyle(
-              fontSize: 24,
-              fontWeight: FontWeight.bold,
-              color: cell.status.foregroundColor,
-            ),
-          ),
-        ),
-      ),
-    );
-  }
-
   @override
   Widget build(BuildContext context) {
     return Watch(
@@ -648,7 +509,7 @@ class _GameScreenState extends State<GameScreen>
                               horizontal: 4.0,
                               vertical: 8.0,
                             ),
-                            child: makeCellWidget2(idx),
+                            child: makeCellWidget(idx),
                           );
                         }),
                       ),
@@ -769,34 +630,3 @@ class _GameScreenState extends State<GameScreen>
     );
   }
 }
-
-
-
-            // Expanded(
-            //   child: ValueListenableBuilder<List<String>>(
-            //     valueListenable: _guessHistory,
-            //     builder: (context, guesses, _) {
-            //       return ListView.builder(
-            //         itemCount: guesses.length,
-            //         itemBuilder: (context, index) {
-            //           final guess = guesses[index];
-            //           final isCorrect = guess == _secretPhrase.value;
-
-            //           return FadeTransition(
-            //             opacity: _fadeController,
-            //             child: ListTile(
-            //               title: Text(
-            //                 guess,
-            //                 style: TextStyle(
-            //                   color: isCorrect ? Colors.green : Colors.red,
-            //                   fontSize: 18,
-            //                   fontWeight: FontWeight.bold,
-            //                 ),
-            //               ),
-            //             ),
-            //           );
-            //         },
-            //       );
-            //     },
-            //   ),
-            // ),
